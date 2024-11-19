@@ -23,7 +23,7 @@ http://localhost:3000/
 ![Trimmed_IK](https://github.com/user-attachments/assets/0065712d-5d8a-488a-949e-d8fe118845e3)
 
 
-<img src="https://github.com/user-attachments/assets/0065712d-5d8a-488a-949e-d8fe118845e3" alt="Trimmed IK" width="500"/>
+<img src="https://github.com/user-attachments/assets/0065712d-5d8a-488a-949e-d8fe118845e3" alt="Trimmed IK" width="1000"/>
 
 
 
