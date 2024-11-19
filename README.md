@@ -22,7 +22,7 @@ http://localhost:3000/
 ## Optimized Inverse Kinematics on Fetch Platform:
 <img src="https://github.com/user-attachments/assets/0065712d-5d8a-488a-949e-d8fe118845e3" alt="Trimmed IK" width="500"/>
 
-## Cool Demo of Spider Gait: (Embed - Click Me!)
+## Cool Demo of Spider Gait: (Click Me!)
 [![StickBug Demonstration](https://img.youtube.com/vi/5qtt-moe3vg/0.jpg)](https://www.youtube.com/watch?v=5qtt-moe3vg)
 
 ## Updates:
