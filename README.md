@@ -26,10 +26,6 @@ http://localhost:3000/
 [![StickBug Demonstration](https://img.youtube.com/vi/5qtt-moe3vg/0.jpg)](https://www.youtube.com/watch?v=5qtt-moe3vg)
 
 ## Updates:
-- Fast Inverse Kinematics Demo - can be found at the root directory under the filename "IK100in60.mp4". NOTE: "mr2-IK100in60.mp4" is an old version of the video (using mr2) and should NOT be used for grading.
-
-- FSM Dance Showcase - can be found on the WN24 AutoRob FSM Dance Showcase presentation, or by following (https://www.youtube.com/watch?v=5qtt-moe3vg&t=1s)
-
 - Base Offset Transform - Can be found inside kineval_forward_kinematics.js. Changes include offsetting the INITIAL transforms (to make the ROS robots upright instead of sideways), as well as dealing with prismatic joints differently (otherwise the prismatic joint for the Fetch robot is treated like a rotational joint). Furthermore, changes were made to the robot_heading & robot_lateral to preserve WASDQE movement when importing a ROS-based coordinate system robot.
 
 4. Enforcing Joint Limits - Can be seen inside kineval_controls.js. Not sure if this is extra credit, but it's something extra I did because I got tired of the robots completely ignoring their own joint limits and clipping through themselves.
