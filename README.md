@@ -2,13 +2,6 @@ KinEval
 =======
 ## Welcome to KinEval! A JS-based framework for robot kinematics, dynamics, and autonomous robot control.
 
-### Optimized Inverse Kinematics on Fetch Platform (Gif)
-![Trimmed_IK](https://github.com/user-attachments/assets/0065712d-5d8a-488a-949e-d8fe118845e3)
-
-
-### Spider Gait Motion Planning (Embed - Click Me!)
-[![StickBug Demonstration](https://img.youtube.com/vi/5qtt-moe3vg/0.jpg)](https://www.youtube.com/watch?v=5qtt-moe3vg)
-
 To see kineval in action, open home.html in a web browser.  Firefox 29.0 through 41.0 works for sure.  Chrome and Opera will throw security errors when loading local files from JavaScript (which feels like forcing people into the cloud).  One method around this issue is to serve home.html from a web server.  If python is available on your system, this can be done by running python's SimpleHTTPServer: 
 
 python -m SimpleHTTPServer
@@ -25,6 +18,17 @@ node simple-server
 and loading the file from the following URL:
 
 http://localhost:3000/
+
+## Optimized Inverse Kinematics on Fetch Platform (Gif)
+![Trimmed_IK](https://github.com/user-attachments/assets/0065712d-5d8a-488a-949e-d8fe118845e3)
+
+
+<img src="https://github.com/user-attachments/assets/0065712d-5d8a-488a-949e-d8fe118845e3" alt="Trimmed IK" width="500"/>
+
+
+
+## Spider Gait Motion Planning (Embed - Click Me!)
+[![StickBug Demonstration](https://img.youtube.com/vi/5qtt-moe3vg/0.jpg)](https://www.youtube.com/watch?v=5qtt-moe3vg)
 
 ## Updates:
 - Fast Inverse Kinematics Demo - can be found at the root directory under the filename "IK100in60.mp4". NOTE: "mr2-IK100in60.mp4" is an old version of the video (using mr2) and should NOT be used for grading.
