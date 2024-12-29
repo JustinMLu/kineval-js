@@ -8,7 +8,7 @@
      
     @author ohseejay / https://github.com/ohseejay / https://bitbucket.org/ohseejay
 
-    Justin Lu, Chad Jenkins, and the 
+    Chad Jenkins
     Laboratory for Perception RObotics and Grounded REasoning Systems
     University of Michigan
 
@@ -61,6 +61,7 @@ kineval.init = function init() {
 
     // create kineval params object and set initial values
     kineval.initParameters();
+
 
     // initialize threejs and rendering scene
     kineval.initScene();
@@ -263,17 +264,17 @@ kineval.initParameters = function initParameters() {
     // create params object 
     kineval.params = {};
 
-    kineval.params.just_starting = true;  // set to true as default, set false once starting forward kinematics project
+    kineval.params.just_starting = false;  // set to true as default, set false once starting forward kinematics project
 
     // sets request for single update or persistent update of robot pose based on IK, setpoint controller, etc. 
     kineval.params.update_pd = false;
     kineval.params.persist_pd = false;
     kineval.params.update_pd_clock = false;      
     kineval.params.update_pd_dance = false;      
-    kineval.params.update_ik = false;      
-    kineval.params.persist_ik = false;      
+    kineval.params.update_ik = true;   //
+    kineval.params.persist_ik = true;  // DEFAULT ENABLE IK     
     kineval.params.trial_ik_random = {};
-    kineval.params.trial_ik_random.execute = false;
+    kineval.params.trial_ik_random.execute = false; // DEFAULT ENABLE RANDOM
     kineval.params.trial_ik_random.start = 0;
     kineval.params.trial_ik_random.time = 0.00001;
     kineval.params.trial_ik_random.targets = 0;
@@ -341,7 +342,6 @@ kineval.initParameters = function initParameters() {
     kineval.params.map_filename = url_params.map_filename;
     if (typeof kineval.params.map_filename === 'undefined') kineval.params.display_map = false;
     else kineval.params.display_map = true;
-
 
 }
 
@@ -1033,5 +1033,4 @@ function tempPointCloud() {
   } // chosenidx
 */  // normal computation
 }
-
 

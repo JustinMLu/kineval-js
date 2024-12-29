@@ -8,7 +8,7 @@
      
     @author ohseejay / https://github.com/ohseejay / https://bitbucket.org/ohseejay
 
-    Justin Lu, Chad Jenkins, and the  Jenkins
+    Chad Jenkins
     Laboratory for Perception RObotics and Grounded REasoning Systems
     University of Michigan
 
