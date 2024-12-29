@@ -51,7 +51,7 @@ kineval.randomizeIKtrial = function randomIKtrial () {
             + Math.pow(kineval.params.ik_target.position[2][0] - endeffector_world[2][0], 2.0));
 
     // If distance is less than 0.01, generate new target
-    if (kineval.params.trial_ik_random.distance_current < 0.05) {
+    if (kineval.params.trial_ik_random.distance_current < 0.08) {
         kineval.params.ik_target.position[0][0] = 1.2 * (Math.random() - 0.5);
         kineval.params.ik_target.position[1][0] = 1.2 * (Math.random() - 0.5) + 1.5;
         kineval.params.ik_target.position[2][0] = 0.7 * (Math.random() - 0.5) + 0.5;
