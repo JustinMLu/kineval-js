@@ -315,7 +315,7 @@ kineval.initParameters = function initParameters() {
     kineval.params.ik_target.position = [[0],[0.8],[1.0],[1]];
     kineval.params.ik_target.orientation = [Math.PI/6, Math.PI/4, 0];
     kineval.params.ik_orientation_included = false;
-    kineval.params.ik_steplength = 0.1;
+    kineval.params.ik_steplength = 0.25;
     kineval.params.ik_pseudoinverse = false;
 
     // initialize flags for executing planner
