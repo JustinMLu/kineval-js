@@ -23,6 +23,7 @@ kineval.robotInverseKinematics = function robot_inverse_kinematics(endeffector_t
         
         // if update requested, call ik iterator and show endeffector and target
         kineval.iterateIK(endeffector_target_world, endeffector_joint, endeffector_position_local);
+        
         if (kineval.params.trial_ik_random.execute)
             kineval.randomizeIKtrial();
 
@@ -50,7 +51,7 @@ kineval.randomizeIKtrial = function randomIKtrial () {
             + Math.pow(kineval.params.ik_target.position[2][0] - endeffector_world[2][0], 2.0));
 
     // If distance is less than 0.01, generate new target
-    if (kineval.params.trial_ik_random.distance_current < 0.01) {
+    if (kineval.params.trial_ik_random.distance_current < 0.05) {
         kineval.params.ik_target.position[0][0] = 1.2 * (Math.random() - 0.5);
         kineval.params.ik_target.position[1][0] = 1.2 * (Math.random() - 0.5) + 1.5;
         kineval.params.ik_target.position[2][0] = 0.7 * (Math.random() - 0.5) + 0.5;
@@ -154,6 +155,7 @@ kineval.iterateIK = function iterate_inverse_kinematics(endeffector_target_world
         let output = robot.dq[i] * kineval.params.ik_steplength;
         robot.joints[jointArray[i]].control = output;
     }
+
 }
 
 

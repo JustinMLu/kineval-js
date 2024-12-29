@@ -111,7 +111,7 @@ kineval.handleUserInput = function user_input() {
             textbar.innerHTML += "<br>executing dance routine, pose " + kineval.params.dance_pose_index + " of " + kineval.params.dance_sequence_index.length;
     }
     if (kineval.params.update_ik||kineval.params.persist_ik) {  // BYPASSED FOR DEMO
-        // if (!kineval.params.trial_ik_random.execute) 
+        if (!kineval.params.trial_ik_random.execute) 
             textbar.innerHTML = "inverse kinematics controller has been invoked";
     }
     if (kineval.params.generating_motion_plan) 

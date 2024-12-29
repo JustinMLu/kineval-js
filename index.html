@@ -303,6 +303,8 @@ function my_animate() {
     // if requested, perform inverse kinematics control to reach to point
     kineval.robotInverseKinematics(kineval.params.ik_target, robot.endeffector.frame, robot.endeffector.position);
 
+    kineval.randomizeIKtrial();
+
     // IF REQUESTED, PERFORM CONFIGURATION SPACE MOTION PLANNING TO HOME POSE
     kineval.planMotionRRTConnect();
 
