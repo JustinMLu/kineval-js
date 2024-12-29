@@ -102,6 +102,7 @@ kineval.handleUserInput = function user_input() {
         kineval.params.update_pd_clock = true;
     }
 
+
     // textbar messages
     if (kineval.params.update_pd||kineval.params.persist_pd) {
         textbar.innerHTML = "joint servo controller has been invoked";
