@@ -301,9 +301,13 @@ function my_animate() {
     kineval.setpointDanceSequence(); // dance routine
     kineval.robotArmControllerSetpoint(); // PID controller
     kineval.params.update_pd = false; // clear PID request for next iteration
+    
 
     // if requested, perform inverse kinematics control to reach to point
     kineval.robotInverseKinematics(kineval.params.ik_target, robot.endeffector.frame, robot.endeffector.position);
+
+    // DO IT TWICE!
+    kineval.robotInverseKinematics(kineval.params.ik_target_2, robot.endeffector_2.frame, robot.endeffector_2.position);
 
     // IF REQUESTED, PERFORM CONFIGURATION SPACE MOTION PLANNING TO HOME POSE
     kineval.planMotionRRTConnect();

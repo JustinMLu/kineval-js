@@ -311,8 +311,16 @@ kineval.initParameters = function initParameters() {
     // initialize inverse kinematics target location 
     // KE 3 : ik_target param is redundant as an argument into inverseKinematics 
     kineval.params.ik_target = {};
-    kineval.params.ik_target.position = [[0],[0.8],[1.0],[1]];
+    kineval.params.ik_target.position = [[1.0],[1.0],[0.5],[1]]; // HOMOGENEOUS COORDINATES
     kineval.params.ik_target.orientation = [Math.PI/6, Math.PI/4, 0];
+
+    // SECOND INVERSE KINEMATICS TARGET
+    kineval.params.ik_target_2 = {};
+    kineval.params.ik_target_2.position = [[2.0],[1.0],[0.5],[1]]; // HOMOGENEOUS COORDINATES
+    kineval.params.ik_target_2.orientation = [Math.PI/6, Math.PI/4, 0];
+    
+    
+    //General IK parameters
     kineval.params.ik_orientation_included = false;
     kineval.params.ik_steplength = 0.1;
     kineval.params.ik_pseudoinverse = false;
@@ -411,66 +419,6 @@ kineval.initScene = function initScene() {
     gridHelper.material.opacity = 0.2;
     scene.add( gridHelper );
 
-/* experimental scene
-    var light_drake = new THREE.PointLight( 0xb05890, 0.4, 10, 0.1 ); 
-    light_drake.position.set( 0, 4, -5 ); 
-    //scene.add( light_drake );
-
-    var light_drake2 = new THREE.PointLight( 0xb05890, 0.5, 10, 0.1 ); 
-    light_drake2.position.set( 2, 3, 0 ); 
-    //scene.add( light_drake2 );
-
-    //light_drake3 = new THREE.AmbientLight(0x301322); 
-    light_drake3 = new THREE.AmbientLight(0x602845); 
-    scene.add( light_drake3 );
-
-    var geometry = new THREE.PlaneGeometry( 8, 20, 32 );
-    var material = new THREE.MeshLambertMaterial( {color: 0xb05890, side: THREE.DoubleSide} );
-    var plane = new THREE.Mesh( geometry, material );
-    plane.rotateOnAxis({x:0,y:0,z:1},-Math.PI*1.2/2);//+Math.PI),
-    plane.rotateOnAxis({x:1,y:0,z:0},-Math.PI/2),
-    plane.position.set(-3,0,0);
-    plane.material.transparent = false;
-    plane.material.opacity = 1;
-    scene.add( plane );
-
-    plane = new THREE.Mesh( geometry, material );
-    plane.rotateOnAxis({x:0,y:0,z:1},-Math.PI*1.2/2),
-    plane.rotateOnAxis({x:1,y:0,z:0},-Math.PI/2),
-    plane.position.set(3,0,0);
-    plane.material.transparent = false;
-    plane.material.opacity = 1;
-    scene.add( plane );
-
-    plane = new THREE.Mesh( geometry, material );
-    plane.rotateOnAxis({x:1,y:0,z:0},-Math.PI/2),
-    plane.position.set(0,0.1,0);
-    plane.material.transparent = false;
-    plane.material.opacity = 1;
-    scene.add( plane );
-
-    plane = new THREE.Mesh( geometry, material );
-    material = new THREE.MeshPhongMaterial( {color: 0xff8db0, side: THREE.DoubleSide} );
-    plane.rotateOnAxis({x:0,y:0,z:1},Math.PI/2),
-    plane.position.set(0,0,-11);
-    plane.material.transparent = false;
-    plane.material.opacity = 1;
-    scene.add( plane );
-
-    var geometry = new THREE.PlaneGeometry( 800, 800, 800 );
-    material = new THREE.MeshPhongMaterial( {color: 0x8070cf, side: THREE.DoubleSide} );
-    plane = new THREE.Mesh( geometry, material );
-    plane.position.set(0,0,-19);
-    plane.material.transparent = false;
-    plane.material.opacity = 1;
-    scene.add( plane );
-
-    var light_drake4 = new THREE.PointLight( 0xfffff, 1, 30, 0.1 ); 
-    light_drake4.position.set( 0, 2, -13 ); 
-    scene.add( light_drake4 );
-experimental scene */
-
-
 
     // create geometry for endeffector and Cartesian target indicators
     var temp_geom = new THREE.CubeGeometry(0.3, 0.3, 0.3);
@@ -483,6 +431,13 @@ experimental scene */
     target_geom = new THREE.Mesh(temp_geom, temp_material); // comment this for coolness
     scene.add(target_geom);
     target_geom.visible = false;
+
+    // SECOND target geometry (red)
+    temp_geom = new THREE.CubeGeometry(0.3, 0.3, 0.3);
+    temp_material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    target_geom_2 = new THREE.Mesh(temp_geom, temp_material);
+    scene.add(target_geom_2);
+    target_geom_2.visible = false;
 
     // create threejs geometries for robot links
     kineval.initRobotLinksGeoms();
