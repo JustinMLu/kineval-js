@@ -31,11 +31,12 @@ kineval.robotInverseKinematics = function robot_inverse_kinematics(endeffector_t
     kineval.params.update_ik = false; // clear IK request for next iteration
 }
 
+// @ TODO: We can modify this function to manually specify leg targets for a biped
 kineval.randomizeIKtrial = function randomIKtrial () {
 
     // update time from start of trial
     cur_time = new Date();
-    kineval.params.trial_ik_random.time = cur_time.getTime()-kineval.params.trial_ik_random.start.getTime();
+    kineval.params.trial_ik_random.time = cur_time.getTime() - kineval.params.trial_ik_random.start.getTime();
 
     endeffector_world = matrix_multiply(robot.joints[robot.endeffector.frame].xform,robot.endeffector.position);
 

@@ -111,9 +111,15 @@ var url_params = {
     map_filename: "maps/Cam_Prep-VFX-checkerboard-lens_distortion-1in.jpg"
 };
 
-// preload default robot and world 
+
+//////////////////////////////////////////////////
+/////     LOAD ROBOT AND WORLD HERE
+//////////////////////////////////////////////////
+
 // kineval.loadJSFile("robots/robot_mr2.js","robot");
-kineval.loadJSFile("robots/fetch/fetch.urdf.js","robot");
+
+kineval.loadJSFile("robots/robot_scorpion.js","robot");
+
 kineval.loadJSFile("worlds/world_s.js","world");
 //kineval.loadJSFile("worlds/world_empty.js","world");
 
@@ -138,8 +144,9 @@ for (i=1;i<url_parsed.length;i++) {
 //window.onload = kineval.start;
 document.body.onload = kineval.start;
 
-// STUDENT: my_animate is where your robot's controls and movement are updated over time
 
+
+// scorpion robot dance sequence setpoints
 function crawler_setpoint(l_hip, r_hip, l_knee, r_knee, l_ankle, r_ankle, tail_shldr, tail_elbow, neck) {
     var setpoints = [];
 
@@ -160,6 +167,7 @@ function crawler_setpoint(l_hip, r_hip, l_knee, r_knee, l_ankle, r_ankle, tail_s
 
 var pi = Math.PI;
 
+// THIS IS HOW I PROGRAMMED IN HTE SCORPOION'S ROBOT GAIT
 const RStates = {
     LIFT: [pi/20, -pi/8, pi/3],
     MOVE: [-pi/20, -pi/8, pi/3],
@@ -178,8 +186,10 @@ function my_init() {
 
     kineval.startingPlaceholderInit(); // a quick and dirty JavaScript tutorial
     
+
+    // Set up the dance sequence for the scorpion robot
     if (robot.name === 'scorpion') {
-        kineval.params.dance_sequence_index = [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5, 4, 5, 4, 5];
+        kineval.params.dance_sequence_index = [0, 1, 2, 3];
         kineval.params.dance_pose_index = 0;
         kineval.setpoints = [
             {
@@ -246,26 +256,21 @@ function my_init() {
                 "leg7_hip": LStates.SWING[0], "leg7_knee": LStates.SWING[1], "leg7_ankle": LStates.SWING[2], // Left mid-back
                 "leg8_hip": LStates.LIFT[0], "leg8_knee": LStates.LIFT[1], "leg8_ankle": LStates.LIFT[2],
                 "leg4_hip": LStates.PLACE[0], "leg4_knee": LStates.PLACE[1], "leg4_ankle": LStates.PLACE[2] // Left front
-            },
-
-            // Stick bug
-            crawler_setpoint(0, 0, pi/4, pi/4, -pi/4, pi/4, -pi/2, pi/2, 0),
-            crawler_setpoint(0, 0, pi/4, pi/4, pi/4, -pi/4, pi/8, 0, 0)
+            }
         ];
     }
 }
 
 
 //////////////////////////////////////////////////
-/////     ANIMATION AND INTERACTION LOOP
+/////     ANIMATION AND FORWARD KINEMATICS LOOP
 //////////////////////////////////////////////////
 
-// STUDENT: my_animate is where your robot's controls and movement are updated over time
+// STUDENT: my_animate is where the robot's controls and movement are updated over time
 function my_animate() {
 
-    // set to starting point mode is true as default (initialized in kineval.js)
-    //   set to false once starting forward kinematics project
-    //kineval.params.just_starting = false;  
+    // TURN OFF JUST-STARTING MODE
+    kineval.params.just_starting = false;  
  
     if (kineval.params.just_starting == true) {
         startingPlaceholderAnimate();
@@ -276,7 +281,6 @@ function my_animate() {
     // ROBOT DYNAMICS 
 
     // update robot configuration from applied robot controls 
-    //   (assuming pure kinematics for now)
     kineval.applyControls(robot);
 
     // HANDLE USER CONTROLS

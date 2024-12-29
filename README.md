@@ -8,7 +8,7 @@ python -m SimpleHTTPServer
 
 and loading the file from the following URL:
 
-http://localhost:8000/home.html
+http://localhost:8000/home.html (OR INDEX.HTML)
 
 or, alternatively, NodeJS's (https://nodejs.org/) simple-server from your working directory:
 
