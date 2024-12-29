@@ -189,42 +189,106 @@ kineval.robotDraw = function drawRobot() {
         }
     }
 
-    if (typeof matrix_multiply !== 'undefined') { // hacked for stencil
+        // If matrix ops are available, place the end-effector and targets
+        if (typeof matrix_multiply !== 'undefined') {
 
-    // display robot endeffector
-    endeffector_mat = [];
-    if (kineval.params.ik_orientation_included)
-        endeffector_mat = matrix_2Darray_to_threejs(matrix_multiply(robot.joints[robot.endeffector.frame].xform,generate_translation_matrix(robot.endeffector.position[0],robot.endeffector.position[1],robot.endeffector.position[2])));
-    else {
-        endeffector_world = matrix_multiply(robot.joints[robot.endeffector.frame].xform,robot.endeffector.position);
-        endeffector_mat = matrix_2Darray_to_threejs(generate_translation_matrix(endeffector_world[0],endeffector_world[1],endeffector_world[2]));
-    }
-    simpleApplyMatrix(endeffector_geom,endeffector_mat);
-
-    // display endeffector target
-    if (kineval.params.ik_orientation_included)
-        var target_mat = matrix_2Darray_to_threejs(
-            matrix_multiply(
-                generate_translation_matrix(kineval.params.ik_target.position[0][0],kineval.params.ik_target.position[1][0],kineval.params.ik_target.position[2][0]),
-                matrix_multiply(
-                    generate_rotation_matrix_X(kineval.params.ik_target.orientation[0]),
+            // Display robot end-effector
+            endeffector_mat = [];
+            if (kineval.params.ik_orientation_included) {
+                endeffector_mat = matrix_2Darray_to_threejs(
                     matrix_multiply(
-                        generate_rotation_matrix_Y(kineval.params.ik_target.orientation[1]),
-                        generate_rotation_matrix_Z(kineval.params.ik_target.orientation[2])
-        ))));
-    else 
-        var target_mat = matrix_2Darray_to_threejs(generate_translation_matrix(kineval.params.ik_target.position[0][0],kineval.params.ik_target.position[1][0],kineval.params.ik_target.position[2][0]));
-    simpleApplyMatrix(target_geom,target_mat);
-    } // hacked for stencil
-
-    if ((kineval.params.update_ik)||(kineval.params.persist_ik)) { 
-        endeffector_geom.visible = true;
-        target_geom.visible = true;
-    }
-    else {
-        endeffector_geom.visible = false;
-        target_geom.visible = false;
-    }
+                        robot.joints[robot.endeffector.frame].xform,
+                        generate_translation_matrix(
+                            robot.endeffector.position[0],
+                            robot.endeffector.position[1],
+                            robot.endeffector.position[2]
+                        )
+                    )
+                );
+            } else {
+                endeffector_world = matrix_multiply(
+                    robot.joints[robot.endeffector.frame].xform,
+                    robot.endeffector.position
+                );
+                endeffector_mat = matrix_2Darray_to_threejs(
+                    generate_translation_matrix(
+                        endeffector_world[0],
+                        endeffector_world[1],
+                        endeffector_world[2]
+                    )
+                );
+            }
+            simpleApplyMatrix(endeffector_geom, endeffector_mat);
+    
+            // DISPLAY TARGET #1 (green)
+            if (kineval.params.ik_orientation_included) {
+                var target_mat = matrix_2Darray_to_threejs(
+                    matrix_multiply(
+                        generate_translation_matrix(
+                            kineval.params.ik_target.position[0][0],
+                            kineval.params.ik_target.position[1][0],
+                            kineval.params.ik_target.position[2][0]
+                        ),
+                        matrix_multiply(
+                            generate_rotation_matrix_X(kineval.params.ik_target.orientation[0]),
+                            matrix_multiply(
+                                generate_rotation_matrix_Y(kineval.params.ik_target.orientation[1]),
+                                generate_rotation_matrix_Z(kineval.params.ik_target.orientation[2])
+                            )
+                        )
+                    )
+                );
+            } else {
+                var target_mat = matrix_2Darray_to_threejs(
+                    generate_translation_matrix(
+                        kineval.params.ik_target.position[0][0],
+                        kineval.params.ik_target.position[1][0],
+                        kineval.params.ik_target.position[2][0]
+                    )
+                );
+            }
+            simpleApplyMatrix(target_geom, target_mat);
+    
+            // DISPLAY TARGET #2 (red)
+            if (kineval.params.ik_orientation_included) {
+                var target_mat_2 = matrix_2Darray_to_threejs(
+                    matrix_multiply(
+                        generate_translation_matrix(
+                            kineval.params.ik_target_2.position[0][0],
+                            kineval.params.ik_target_2.position[1][0],
+                            kineval.params.ik_target_2.position[2][0]
+                        ),
+                        matrix_multiply(
+                            generate_rotation_matrix_X(kineval.params.ik_target_2.orientation[0]),
+                            matrix_multiply(
+                                generate_rotation_matrix_Y(kineval.params.ik_target_2.orientation[1]),
+                                generate_rotation_matrix_Z(kineval.params.ik_target_2.orientation[2])
+                            )
+                        )
+                    )
+                );
+            } else {
+                var target_mat_2 = matrix_2Darray_to_threejs(
+                    generate_translation_matrix(
+                        kineval.params.ik_target_2.position[0][0],
+                        kineval.params.ik_target_2.position[1][0],
+                        kineval.params.ik_target_2.position[2][0]
+                    )
+                );
+            }
+            simpleApplyMatrix(target_geom_2, target_mat_2);
+        }
+    
+        // Toggle visibility
+        if (kineval.params.update_ik || kineval.params.persist_ik) {
+            endeffector_geom.visible = true;
+            target_geom.visible       = true;
+            target_geom_2.visible     = true;  // show second target
+        } else {
+            endeffector_geom.visible = false;
+            target_geom.visible       = false;
+            target_geom_2.visible     = false; // hide second target
+        }
 }
 
 
@@ -311,12 +375,12 @@ kineval.initParameters = function initParameters() {
     // initialize inverse kinematics target location 
     // KE 3 : ik_target param is redundant as an argument into inverseKinematics 
     kineval.params.ik_target = {};
-    kineval.params.ik_target.position = [[1.0],[1.0],[0.5],[1]]; // HOMOGENEOUS COORDINATES
+    kineval.params.ik_target.position = [[0.5],[1.0],[0.5],[1]]; // HOMOGENEOUS COORDINATES
     kineval.params.ik_target.orientation = [Math.PI/6, Math.PI/4, 0];
 
     // SECOND INVERSE KINEMATICS TARGET
     kineval.params.ik_target_2 = {};
-    kineval.params.ik_target_2.position = [[2.0],[1.0],[0.5],[1]]; // HOMOGENEOUS COORDINATES
+    kineval.params.ik_target_2.position = [[-0.5],[1.0],[0.5],[1]]; // HOMOGENEOUS COORDINATES
     kineval.params.ik_target_2.orientation = [Math.PI/6, Math.PI/4, 0];
     
     
@@ -426,6 +490,8 @@ kineval.initScene = function initScene() {
     endeffector_geom = new THREE.Mesh(temp_geom, temp_material); // comment this for coolness
     scene.add(endeffector_geom);
     endeffector_geom.visible = false;
+
+    
     temp_geom = new THREE.CubeGeometry(0.3, 0.3, 0.3);
     temp_material = new THREE.MeshBasicMaterial( {color: 0x00ff00} )
     target_geom = new THREE.Mesh(temp_geom, temp_material); // comment this for coolness
@@ -934,59 +1000,6 @@ function tempPointCloud() {
         scene.add(pcloud);
     }
 
-
-/* normal computation
-    chosenidx = 40000;
-  for (chosenidx=40000;chosenidx<40500;chosenidx+=20) { 
-  //for (chosenidx=500;chosenidx<pointcloud.length;chosenidx+=20000) { 
-  //for (chosenidx=40000;chosenidx<41100;chosenidx+=1000) { 
-    pcloud_point_centered = [];
-    pcloud_point_weights = [];
-    pcloud_point_weighted = [];
-    var sum_weight = 0;
-    for (i=0;i<pointcloud.length;i++) {
-        pcloud_point_centered[i] = [];
-        pcloud_point_centered[i][0] = pointcloud[i][0]-pointcloud[chosenidx][0];
-        pcloud_point_centered[i][1] = pointcloud[i][1]-pointcloud[chosenidx][1];
-        pcloud_point_centered[i][2] = pointcloud[i][2]-pointcloud[chosenidx][2];
-        //pcloud_point_weights[i] = Math.exp(-numeric.dot(pointcloud[chosenidx],pointcloud[i])/Math.pow(0.2,2));
-        pcloud_point_weights[i] = Math.exp(-Math.pow(numeric.norm2(numeric.sub(pointcloud[chosenidx],pointcloud[i])),2)/Math.pow(1.8,2));
-        sum_weight += pcloud_point_weights[i];
-        // perform numeric.dot(numeric.diag(pcloud_point_weighted),pointcloud)
-        pcloud_point_weighted[i] = [];
-        pcloud_point_weighted[i][0] = pcloud_point_weights[i]*pcloud_point_centered[i][0];
-        pcloud_point_weighted[i][1] = pcloud_point_weights[i]*pcloud_point_centered[i][1];
-        pcloud_point_weighted[i][2] = pcloud_point_weights[i]*pcloud_point_centered[i][2];
-    }
-    console.log(chosenidx+" "+sum_weight); 
-    pcloud_point_centered_transpose = numeric.transpose(pcloud_point_centered);
-    //cov = numeric.div(numeric.dot(pcloud_point_centered_transpose,numeric.dot(numeric.diag(pcloud_point_weighted),pointcloud))/(pointcloud.length-1));
-    cov = numeric.div(numeric.dot(pcloud_point_centered_transpose,pcloud_point_weighted),pointcloud.length-1);
-    eigs = numeric.eig(cov);
-
-    var material = new THREE.LineBasicMaterial({
-        color: 0x00ff00
-    });
-    var material2 = new THREE.LineBasicMaterial({
-        color: 0x00ffff
-    });
-
-    for (i=2;i<3;i++) {
-        var geometry = new THREE.Geometry();
-        geometry.vertices.push(
-	    new THREE.Vector3( pointcloud[chosenidx][0], pointcloud[chosenidx][1], pointcloud[chosenidx][2] ),
-	    new THREE.Vector3( pointcloud[chosenidx][0]+0.1*eigs.E.x[i][0], pointcloud[chosenidx][1]+0.1*eigs.E.x[i][1], pointcloud[chosenidx][2]+0.1*eigs.E.x[i][2] )
-        );
-
-        if (i == 2)
-        var line = new THREE.Line( geometry, material );
-        else
-        line = new THREE.Line( geometry, material2 );
-
-        scene.add( line );
-    }
-  } // chosenidx
-*/  // normal computation
 }
 
 

@@ -37,22 +37,31 @@ kineval.randomizeIKtrial = function randomIKtrial () {
     kineval.params.trial_ik_random.time = cur_time.getTime() - kineval.params.trial_ik_random.start.getTime();
 
     // Get the current end-effector position in world coordinates
-    var cur_position = matrix_multiply(robot.joints[robot.endeffector.frame].xform,
-                                            robot.endeffector.position);
+    var cur_position = matrix_multiply(
+        robot.joints[robot.endeffector.frame].xform, 
+        robot.endeffector.position
+    );
 
-    // Calculate the distance between the end-effector and the current target
+    // Calculate distance to the current "first" target
     kineval.params.trial_ik_random.distance_current = Math.sqrt(
         Math.pow(kineval.params.ik_target.position[0][0] - cur_position[0][0], 2) +
         Math.pow(kineval.params.ik_target.position[1][0] - cur_position[1][0], 2) +
         Math.pow(kineval.params.ik_target.position[2][0] - cur_position[2][0], 2)
     );
 
-    // If the end-effector is close enough, generate a new random target
-    if (kineval.params.trial_ik_random.distance_current < 0.01) {
+    // If the end-effector is close enough, randomize BOTH targets
+    if (kineval.params.trial_ik_random.distance_current < 0.1) {
+
+        // Randomize first target
         kineval.params.ik_target.position[0][0] = 1.2 * (Math.random() - 0.5);
         kineval.params.ik_target.position[1][0] = 1.2 * (Math.random() - 0.5) + 1.5;
         kineval.params.ik_target.position[2][0] = 0.7 * (Math.random() - 0.5) + 0.5;
-        
+
+        // Randomize SECOND target as well
+        kineval.params.ik_target_2.position[0][0] = 1.2 * (Math.random() - 0.5);
+        kineval.params.ik_target_2.position[1][0] = 1.2 * (Math.random() - 0.5) + 1.5 * 1.25;
+        kineval.params.ik_target_2.position[2][0] = 0.7 * (Math.random() - 0.5) + 0.5 * 1.25;
+
         // Increase the target count and give user feedback
         kineval.params.trial_ik_random.targets++;
         textbar.innerHTML = "IK trial Random: target " + 
@@ -60,9 +69,7 @@ kineval.randomizeIKtrial = function randomIKtrial () {
             " reached at time " + 
             kineval.params.trial_ik_random.time;
     }
-
-    // Additional logic for random trials can be inserted here if desired
-}
+};
 
 
 /*

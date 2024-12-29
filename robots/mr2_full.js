@@ -92,24 +92,25 @@ links_geom["clavicle_left"] = new THREE.CubeGeometry( 0.3, 0.3, 1 );
 links_geom["clavicle_left"].applyMatrix( new THREE.Matrix4().makeTranslation(0, 0, 0.5) );
 
 // SHOULDER JOINTS
-links_geom["shoulder_right"] = new THREE.CubeGeometry( 0.3, 0.3, 0.7 );
+var thickness = 0.125;
+links_geom["shoulder_right"] = new THREE.CubeGeometry( thickness, thickness, 0.7 );
 links_geom["shoulder_right"].applyMatrix( new THREE.Matrix4().makeTranslation(0, 0, 0.35) );
 
-links_geom["shoulder_left"] = new THREE.CubeGeometry( 0.3, 0.3, 0.7 );
+links_geom["shoulder_left"] = new THREE.CubeGeometry( thickness, thickness, 0.7 );
 links_geom["shoulder_left"].applyMatrix( new THREE.Matrix4().makeTranslation(0, 0, 0.35) );
 
 // UPPER ARMS
-links_geom["upperarm_right"] = new THREE.CubeGeometry( 0.3, 0.3, 0.7 );
+links_geom["upperarm_right"] = new THREE.CubeGeometry( thickness, thickness, 0.7 );
 links_geom["upperarm_right"].applyMatrix( new THREE.Matrix4().makeTranslation(0, 0, 0.35) );
 
-links_geom["upperarm_left"] = new THREE.CubeGeometry( 0.3, 0.3, 0.7 );
+links_geom["upperarm_left"] = new THREE.CubeGeometry( thickness, thickness, 0.7 );
 links_geom["upperarm_left"].applyMatrix( new THREE.Matrix4().makeTranslation(0, 0, 0.35) );
 
 // LOWER ARMS
-links_geom["forearm_right"] = new THREE.CubeGeometry( 0.3, 0.3, 0.5 );
+links_geom["forearm_right"] = new THREE.CubeGeometry( thickness, thickness, 0.5 );
 links_geom["forearm_right"].applyMatrix( new THREE.Matrix4().makeTranslation(0, 0, 0.25) );
 
-links_geom["forearm_left"] = new THREE.CubeGeometry( 0.3, 0.3, 0.5 );
+links_geom["forearm_left"] = new THREE.CubeGeometry( thickness, thickness, 0.5 );
 links_geom["forearm_left"].applyMatrix( new THREE.Matrix4().makeTranslation(0, 0, 0.25) );
 
 //////////////////////////////////////////////////
