@@ -11,8 +11,8 @@
     @author ohseejay / https://github.com/ohseejay
                      / https://bitbucket.org/ohseejay
 
-    Chad Jenkins
-    Laboratory for Perception RObotics and Grounded REasoning Systems
+    Justin Lu, Chad Jenkins, and the
+    Laboratory for Perception Robotics and Grounded REasoning Systems
     University of Michigan
 
     License: Michigan Honor License 
@@ -103,8 +103,7 @@
 // set KinEval user parameter defaults
 var url_params = {
     // load robot data object from given source file name
-    // robot:"robots/robot_mr2.js",
-    robot:"robots/fetch/fetch.urdf.js",
+    robot:"robots/mr2_full.js",
     // load world data object from given source file name
     world:"worlds/world_s.js",
     // specify floor/map image from given image file name
@@ -116,12 +115,11 @@ var url_params = {
 /////     LOAD ROBOT AND WORLD HERE
 //////////////////////////////////////////////////
 
-// kineval.loadJSFile("robots/robot_mr2.js","robot");
+kineval.loadJSFile("robots/mr2_full.js","robot");
+// kineval.loadJSFile("robots/robot_scorpion.js","robot");
 
-kineval.loadJSFile("robots/robot_scorpion.js","robot");
-
-kineval.loadJSFile("worlds/world_s.js","world");
-//kineval.loadJSFile("worlds/world_empty.js","world");
+// kineval.loadJSFile("worlds/world_s.js","world");
+kineval.loadJSFile("worlds/world_empty.js","world");
 
 // parse KinEval parameters from document URL and set defaults
 var url_parsed = window.location.href.split("?");

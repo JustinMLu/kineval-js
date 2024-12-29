@@ -320,7 +320,7 @@ kineval.tutorialJavaScript = function tutorialJSCoding() {
     textbarReference = document.getElementById("textbar");
 
     // modify the text of the textbar
-    textbarReference.innerHTML = "AutoRob KinEval - autorob.online";
+    textbarReference.innerHTML = "Copyright (C) Justin Lu (just kidding)";
 }
 
 

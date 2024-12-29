@@ -8,7 +8,7 @@
      
     @author ohseejay / https://github.com/ohseejay / https://bitbucket.org/ohseejay
 
-    Chad Jenkins
+    Justin Lu, Chad Jenkins, and the 
     Laboratory for Perception RObotics and Grounded REasoning Systems
     University of Michigan
 
@@ -20,11 +20,13 @@ kineval.robotInverseKinematics = function robot_inverse_kinematics(endeffector_t
 
     // compute joint angle controls to move location on specified link to Cartesian location
     if ((kineval.params.update_ik)||(kineval.params.persist_ik)) { 
+        
         // if update requested, call ik iterator and show endeffector and target
         kineval.iterateIK(endeffector_target_world, endeffector_joint, endeffector_position_local);
         if (kineval.params.trial_ik_random.execute)
             kineval.randomizeIKtrial();
-        else // KE: this use of start time assumes IK is invoked before trial
+
+        else
             kineval.params.trial_ik_random.start = new Date();
     }
 
@@ -34,24 +36,26 @@ kineval.robotInverseKinematics = function robot_inverse_kinematics(endeffector_t
 // @ TODO: We can modify this function to manually specify leg targets for a biped
 kineval.randomizeIKtrial = function randomIKtrial () {
 
-    // update time from start of trial
+    // Update time from start of trial
     cur_time = new Date();
     kineval.params.trial_ik_random.time = cur_time.getTime() - kineval.params.trial_ik_random.start.getTime();
 
+    // Compute endeffector position in world coordinates
     endeffector_world = matrix_multiply(robot.joints[robot.endeffector.frame].xform,robot.endeffector.position);
 
-    // compute distance of endeffector to target
+    // Compute distance of endeffector to target
     kineval.params.trial_ik_random.distance_current = Math.sqrt(
-        Math.pow(kineval.params.ik_target.position[0][0] - endeffector_world[0][0], 2.0)
-        + Math.pow(kineval.params.ik_target.position[1][0] - endeffector_world[1][0], 2.0)
-        + Math.pow(kineval.params.ik_target.position[2][0] - endeffector_world[2][0], 2.0) );
+            Math.pow(kineval.params.ik_target.position[0][0] - endeffector_world[0][0], 2.0)
+            + Math.pow(kineval.params.ik_target.position[1][0] - endeffector_world[1][0], 2.0)
+            + Math.pow(kineval.params.ik_target.position[2][0] - endeffector_world[2][0], 2.0));
 
-    // if target reached, increment scoring and generate new target location
+    // If distance is less than 0.01, generate new target
     if (kineval.params.trial_ik_random.distance_current < 0.01) {
-        kineval.params.ik_target.position[0][0] = 1.2*(Math.random()-0.5);
-        kineval.params.ik_target.position[1][0] = 1.2*(Math.random()-0.5)+1.5;
-        kineval.params.ik_target.position[2][0] = 0.7*(Math.random()-0.5)+0.5;
+        kineval.params.ik_target.position[0][0] = 1.2 * (Math.random() - 0.5);
+        kineval.params.ik_target.position[1][0] = 1.2 * (Math.random() - 0.5) + 1.5;
+        kineval.params.ik_target.position[2][0] = 0.7 * (Math.random() - 0.5) + 0.5;
         
+        // Increment target reached count
         kineval.params.trial_ik_random.targets++;
         textbar.innerHTML = "IK trial Random: target " + kineval.params.trial_ik_random.targets + " reached at time " + kineval.params.trial_ik_random.time;
     }
